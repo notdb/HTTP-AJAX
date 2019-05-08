@@ -27,7 +27,14 @@ class App extends React.Component {
     return (
       <div className="App">
         <header className="App-header">New App Header</header>
-        <FriendsComponent />
+        {this.state.friends.map(friend => (
+          <FriendsComponent
+            key={friend.id}
+            name={friend.name}
+            email={friend.email}
+            age={friend.age}
+          />
+        ))}
       </div>
     );
   }

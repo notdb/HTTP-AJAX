@@ -1,9 +1,11 @@
 import React from "react";
 
-function FriendsComponent() {
+function FriendsComponent(props) {
   return (
     <div>
-      <p>Friends go here</p>
+      <p>{props.name}</p>
+      <p>{props.email}</p>
+      <p>{props.age}</p>
     </div>
   );
 }
