@@ -1,8 +1,18 @@
 import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import FriendsComponent from "./components/FriendsComponent";
+
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  NavLink
+} from "react-router-dom";
+
 import axios from "axios";
+
+import FriendsComponent from "./components/FriendsComponent";
+import Home from "./components/Home";
 
 class App extends React.Component {
   constructor() {
@@ -26,15 +36,21 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">New App Header</header>
-        {this.state.friends.map(friend => (
-          <FriendsComponent
-            key={friend.id}
-            name={friend.name}
-            email={friend.email}
-            age={friend.age}
-          />
-        ))}
+        <header className="App-header">
+          <nav className="nav-links">
+            <Link exact to="/">
+              Home
+            </Link>
+            <Link to="/friends">Friends</Link>
+          </nav>
+        </header>
+        <Route exact path="/" component={Home} />
+        <Route
+          path="/friends"
+          render={props => (
+            <FriendsComponent {...props} friends={this.state.friends} />
+          )}
+        />
       </div>
     );
   }
