@@ -13,6 +13,7 @@ import axios from "axios";
 
 import FriendsComponent from "./components/FriendsComponent";
 import Home from "./components/Home";
+import AddNewFriend from "./components/AddNewFriend";
 
 class App extends React.Component {
   constructor() {
@@ -33,6 +34,16 @@ class App extends React.Component {
       });
   }
 
+  addFriend = friend => {
+    axios
+      .post("http://localhost:5000/friends", friend)
+      .then(res => {
+        this.setState({ friends: res.data });
+        this.props.history.push("/friends");
+      })
+      .catch(err => console.log(err));
+  };
+
   render() {
     return (
       <div className="App">
@@ -42,6 +53,7 @@ class App extends React.Component {
               Home
             </Link>
             <Link to="/friends">Friends</Link>
+            <Link to="/add-new-friend">Add New Friend</Link>
           </nav>
         </header>
         <Route exact path="/" component={Home} />
@@ -49,6 +61,12 @@ class App extends React.Component {
           path="/friends"
           render={props => (
             <FriendsComponent {...props} friends={this.state.friends} />
+          )}
+        />
+        <Route
+          path="/add-new-friend"
+          render={props => (
+            <AddNewFriend {...props} addFriend={this.addFriend} />
           )}
         />
       </div>
